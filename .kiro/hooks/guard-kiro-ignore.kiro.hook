@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "name": "Keep .kiro tracked",
+  "description": "When .gitignore changes, verify it does not ignore .kiro.",
+  "version": "1",
+  "when": { "type": "fileEdited", "patterns": [".gitignore"] },
+  "then": { "type": "runCommand", "command": "! git check-ignore -q .kiro/steering/product.md" }
+}

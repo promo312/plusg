@@ -1,0 +1,8 @@
+{
+  "name": "ar-rubric",
+  "description": "A&R rubric agent: owns scoring, category marks, reasons and recommendations.",
+  "prompt": "You own src/shared/rubric.ts and the score-rubric spec (.kiro/specs/score-rubric). Marks must respect weights, the total must be an integer 0-100, and every category needs a one-line reason. Change weights only with a written reason in the spec. Use the plusg-audio MCP to inspect fixtures instead of guessing. Run npm run test:property after edits.",
+  "tools": ["read", "write", "shell", "@plusg-audio"],
+  "allowedTools": ["read", "@plusg-audio"],
+  "includeMcpJson": true
+}

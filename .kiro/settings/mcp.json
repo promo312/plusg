@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "plusg-audio": {
+      "command": "node",
+      "args": ["tools/mcp-audio/server.mjs"],
+      "disabled": false,
+      "autoApprove": ["probe_audio", "measure_loudness"]
+    }
+  }
+}

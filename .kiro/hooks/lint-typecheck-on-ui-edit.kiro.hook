@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "name": "Lint and typecheck on UI edit",
+  "description": "Run eslint and tsc after edits to the web UI.",
+  "version": "1",
+  "when": { "type": "fileEdited", "patterns": ["web/**/*.ts", "web/**/*.tsx", "web/**/*.css"] },
+  "then": { "type": "runCommand", "command": "npm run lint && npm run typecheck" }
+}

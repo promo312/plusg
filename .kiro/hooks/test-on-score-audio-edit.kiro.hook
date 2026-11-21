@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "name": "Test on score or audio edit",
+  "description": "Run unit and property tests after edits to shared score, audio, lyric or CD+G code.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["src/shared/**/*.ts", "tests/**/*.ts"]
+  },
+  "then": { "type": "runCommand", "command": "npm run test" }
+}
