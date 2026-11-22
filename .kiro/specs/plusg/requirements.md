@@ -10,7 +10,7 @@ Independent musician finishing a song; hackathon judge evaluating the app on a l
 ## R1 Measure
 **Story:** As an artist, I want to know if my track is ready to release.
 - R1.1 When the user chooses a WAV or MP3 file, the system shall decode it with Web Audio and measure, in JavaScript, integrated loudness (ITU-R BS.1770-4 / EBU R128), true peak, clipped sample count, duration, leading silence and trailing silence.
-- R1.2 The JavaScript loudness meter shall match ffmpeg `ebur128` integrated loudness within 0.1 LU on every audio fixture.
+- R1.2 The JavaScript meter shall match ffmpeg `ebur128` integrated loudness within 0.1 LU and true peak within 0.3 dB on every audio fixture (digital silence: -70 LUFS and a true peak of -Infinity).
 - R1.3 When the user supplies lyrics and credits (title, artist, writers), the system shall include lyric completeness, lyric timing and metadata in the score.
 - R1.4 The system shall show a score that is an integer from 0 to 100 and five named categories, each with a numeric mark, a one-line reason and the measured number the mark came from.
 - R1.5 The system shall display the rubric (categories, weights, thresholds) in the UI and document it in `docs/RUBRIC.md`.

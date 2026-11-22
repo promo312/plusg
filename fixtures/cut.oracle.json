@@ -4,6 +4,8 @@
   "integratedLufs": -29.4,
   "loudnessRangeLu": 0.0,
   "truePeakDbtp": -25.5,
+  "integratedLufsPrecise": -29.435,
+  "truePeakDbtpPrecise": -25.514,
   "sampleRate": 44100,
   "channels": 2,
   "durationSec": 4.000000

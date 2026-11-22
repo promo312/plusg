@@ -30,10 +30,10 @@ docs/             RUBRIC.md, spikes.md, kiro-log.md, HOW_WE_USED_KIRO.md (T14)
 ```
 
 ## Measure
-1. `decodeAudioData` gives channel data. A pure function `analyze(channels, sampleRate)` returns `Analysis`: integrated LUFS (two-stage K-weighting biquads, 400 ms blocks at 75% overlap, absolute gate -70 LUFS, relative gate -10 LU), true peak (4x oversampled, per BS.1770-4 Annex 2), clipped sample count (|x| >= 1.0), duration, leading and trailing silence (threshold -50 dBFS), and the level of the last 500 ms.
+1. `decodeAudioData` gives channel data. A pure function `analyze(channels, sampleRate)` returns `Analysis`: integrated LUFS (two-stage K-weighting biquads, 400 ms blocks at 75% overlap, absolute gate -70 LUFS, relative gate -10 LU), true peak (4x oversampled, per BS.1770-4 Annex 2), clipped sample count (|x| >= 32767/32768, 16-bit positive full scale, since a 16-bit decode never reaches exactly 1.0), duration, leading and trailing silence (a sample is silent at or below -50 dBFS on every channel; an all-silent track has leading = duration and trailing = 0), the ending level (RMS in dBFS over the last 500 ms, all channels; -Infinity if silent), and loudness range (3 s windows, gates -70 LUFS and -20 LU, 10th to 95th percentile; informational). K-weighting coefficients are derived for any sample rate by bilinear transform (ffmpeg ebur128 prototype parameters). Channels all have weight 1.0 (correct for mono and stereo). Code: `src/shared/audio/` (`kweight`, `loudness`, `truepeak`, `levels`, `analyze`).
 2. `scoreTrack(analysis, lyrics, credits)` returns a total plus five categories `{ id, name, weight, mark, reason, measured }`. `measured` is the number the mark came from, shown in the UI.
 3. Oracle: `tools/make-fixtures.sh` generates fixtures with ffmpeg and stores ffmpeg `ebur128` results beside each (`*.oracle.json`). A unit test compares `analyze` to them. Tolerance 0.1 LU.
-   Fixtures: good, bad, cut, silence, clipped, mono, sr44, sr48, sample. Oracle JSON keys: `integratedLufs`, `loudnessRangeLu`, `truePeakDbtp`, `sampleRate`, `channels`, `durationSec`. Digital silence: ffmpeg reports integrated -70.0 LUFS (the gate floor) and true peak -inf. The oracle stores `-70` and `null`. The meter must return the -70 floor and a true peak of `-Infinity` (shown as "no signal"). `bad` has trailing silence after a hard cut. `cut` ends mid-signal with no trailing silence, because one file cannot have both.
+   Fixtures: good, bad, cut, silence, clipped, mono, sr44, sr48, sample. Oracle JSON keys: `integratedLufs`, `loudnessRangeLu`, `truePeakDbtp`, `sampleRate`, `channels`, `durationSec`, plus `integratedLufsPrecise` and `truePeakDbtpPrecise` (3 decimals, from the final `ebur128` metadata frame; the summary values are rounded to 0.1, which makes a 0.1 LU check unreliable). The oracle test compares against the precise keys. Digital silence: ffmpeg reports integrated -70.0 LUFS (the gate floor) and true peak -inf. The oracle stores `-70` and `null`. The meter must return the -70 floor and a true peak of `-Infinity` (shown as "no signal"). `bad` has trailing silence after a hard cut. `cut` ends mid-signal with no trailing silence, because one file cannot have both.
    Cue file: `{ "file": string, "lines": [{ "startMs": int >= 0, "text": string }] }`, `startMs` strictly increasing.
 
 ## Fix
@@ -50,7 +50,7 @@ Tap-along: audio plays, the artist taps once per line, each line can be nudged b
 
 ## Open questions
 - PDF without a server: print stylesheet plus `window.print()`, or a small pure-JS PDF writer. Decide in T11 and log in `docs/spikes.md`.
-- Cost of 4x oversampled true peak on long tracks on phones. Measure in T3.
+- Cost of 4x oversampled true peak on long tracks on phones. Measured in T3: `analyze` takes about 2.8 s in Node for 5 minutes of 44.1 kHz stereo (see `docs/spikes.md`). Phone timing is still unmeasured; T5 should run the analysis off the main thread or show progress.
 
 ## Deploy
 `.github/workflows/pages.yml` runs `npm run check`, builds `dist/`, and publishes to GitHub Pages. Vite `base` is `./`.

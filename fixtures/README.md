@@ -30,6 +30,10 @@ Mono and 24 kHz keep `sample.wav` near 1.8 MB. The whole folder is about 11 MB.
 
 Gains to a target loudness are two-pass: the script renders the raw mix, measures it with `ebur128`, then applies `volume=<target - measured>dB`. The exact ffmpeg invocation for every file is in `tools/make-fixtures.sh`.
 
+## Oracle precision
+
+Each oracle JSON has `integratedLufs` and `truePeakDbtp` (ffmpeg summary, rounded to 0.1) and `integratedLufsPrecise` and `truePeakDbtpPrecise` (3 decimals, from the last `ebur128` metadata frame). The meter test compares against the precise values.
+
 ## Silence
 
 For digital silence ffmpeg reports integrated loudness `-70.0 LUFS` (the absolute gate floor, because no block passes the gate), loudness range `0.0 LU` and true peak `-inf dBFS`. JSON cannot hold `-inf`, so `silence.oracle.json` stores `integratedLufs: -70` and `truePeakDbtp: null`. The meter must return -70 (the floor, never `-Infinity` or `NaN`) for loudness and `-Infinity` for true peak, and the UI shows "no signal".

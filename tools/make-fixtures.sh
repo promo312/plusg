@@ -16,6 +16,14 @@ measure() {
     awk '/Summary:/{s=1} s&&/^ +I:/{i=$2} s&&/LRA:/{l=$2} s&&/Peak:/{p=$2} END{print i, l, p}'
 }
 
+# measure_precise <wav> -> prints "I TP": final ebur128 metadata values (integrated LUFS to
+# 3 decimals, true peak in dBTP to 3 decimals, or "null" for no signal). The summary above is rounded to 0.1.
+measure_precise() {
+  ffmpeg -hide_banner -nostats -i "$1" -af ebur128=peak=true:metadata=1,ametadata=mode=print:file=- -f null - 2>/dev/null |
+    awk -F= '/^lavfi.r128.I=/{i=$2} /^lavfi.r128.true_peak=/{p=$2}
+      END{ if (p+0 > 0) tp=sprintf("%.3f", 20*log(p)/log(10)); else tp="null"; print i, tp }'
+}
+
 # render <out.wav> <ffmpeg args...>: 16-bit PCM WAV without metadata
 render() {
   local out=$1; shift
@@ -32,8 +40,9 @@ gain_to() {
 
 # oracle <name>: writes fixtures/<name>.oracle.json from ebur128 + ffprobe
 oracle() {
-  local f="$OUT/$1.wav" m i lra peak sr ch dur
+  local f="$OUT/$1.wav" m i lra peak sr ch dur pi ptp
   m=$(measure "$f"); read -r i lra peak <<<"$m"
+  read -r pi ptp <<<"$(measure_precise "$f")"
   sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$f")
   ch=$(ffprobe -v error -select_streams a:0 -show_entries stream=channels -of csv=p=0 "$f")
   dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
@@ -45,6 +54,8 @@ oracle() {
   "integratedLufs": $i,
   "loudnessRangeLu": $lra,
   "truePeakDbtp": $peak,
+  "integratedLufsPrecise": $pi,
+  "truePeakDbtpPrecise": $ptp,
   "sampleRate": $sr,
   "channels": $ch,
   "durationSec": $dur
