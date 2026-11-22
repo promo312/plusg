@@ -13,7 +13,7 @@ Static files only. Audio is decoded with Web Audio and measured in JavaScript (I
 
 ## Status
 
-Done: scaffold, specs, steering, hooks, agents, MCP, test runner, Pages deploy (the placeholder page is live) and generated audio fixtures with ffmpeg oracle files (T0, T0b, T1, T2). Not built yet: the JS meter, fixes, lyric tap-along, CD+G encoder and decoder, previews, one-sheet and clip export. Features are tracked in [.kiro/specs/plusg/tasks.md](.kiro/specs/plusg/tasks.md).
+Done: scaffold, specs, steering, hooks, agents, MCP, test runner, Pages deploy (live at https://promo312.github.io/plusg/), generated audio fixtures with ffmpeg oracle files, the JS meter (checked against the oracle), the score, and the load and sheet UI (T0 to T5). Not built yet: lyric tap-along, fixes, CD+G encoder and decoder, previews, one-sheet and clip export. Features are tracked in [.kiro/specs/plusg/tasks.md](.kiro/specs/plusg/tasks.md).
 
 ## Run locally
 
