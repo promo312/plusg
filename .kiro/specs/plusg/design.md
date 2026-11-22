@@ -36,6 +36,13 @@ docs/             RUBRIC.md, spikes.md, kiro-log.md, HOW_WE_USED_KIRO.md (T14)
    Fixtures: good, bad, cut, silence, clipped, mono, sr44, sr48, sample. Oracle JSON keys: `integratedLufs`, `loudnessRangeLu`, `truePeakDbtp`, `sampleRate`, `channels`, `durationSec`, plus `integratedLufsPrecise` and `truePeakDbtpPrecise` (3 decimals, from the final `ebur128` metadata frame; the summary values are rounded to 0.1, which makes a 0.1 LU check unreliable). The oracle test compares against the precise keys. Digital silence: ffmpeg reports integrated -70.0 LUFS (the gate floor) and true peak -inf. The oracle stores `-70` and `null`. The meter must return the -70 floor and a true peak of `-Infinity` (shown as "no signal"). `bad` has trailing silence after a hard cut. `cut` ends mid-signal with no trailing silence, because one file cannot have both.
    Cue file: `{ "file": string, "lines": [{ "startMs": int >= 0, "text": string }] }`, `startMs` strictly increasing.
 
+## Load and sheet (T5)
+- Limits: 100 MB file size, 10 minutes of audio (about 210 MB of decoded stereo 44.1 kHz floats, the most a phone is likely to hold). Both are constants in `src/shared/load.ts`, which also holds the pure helpers (number formatting with "no signal" for -Infinity, WAV header sample rate, error mapping to plain messages). Tests: `tests/unit/load.test.ts`.
+- Decode: `decodeAudioData` on an `OfflineAudioContext` created at the file's own sample rate (read from the WAV header; 44.1 kHz for MP3), so a WAV is not resampled before measuring. Channels are copied and transferred to a module Web Worker (`web/analyze.worker.ts`) that runs `analyze`. The UI shows a busy state while it runs. `analyze` is one synchronous call, so there is no percentage.
+- Sample: `fixtures/sample.wav`, `sample.cues.json` and `sample.lyrics.txt` are imported with Vite `?url`, so the build emits them as relative-URL assets (inlining off) and the app fetches them from its own origin. No other request is made.
+- Credits (title, artist, writers) are three text fields. Editing them rescores immediately (pure). The sample pre-fills them with demo values.
+- A failed load never replaces the current sheet.
+
 ## Fix
 Fixes are parameters applied to the decoded original: `{ trimStartSec, trimEndSec, gainDb }`. Applying a fix renders a new buffer, runs `analyze` on it, and scores from the new measurement. Revert drops the parameters. Loudness gain = min(target - measured, ceiling - truePeak). If the result is below the target, the UI says the target is not reachable by gain alone and shows the loudness reached. Fixed audio can be downloaded as WAV.
 

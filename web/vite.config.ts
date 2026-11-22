@@ -10,5 +10,7 @@ export default defineConfig({
   root,
   base: "./",
   plugins: [react()],
-  build: { outDir: "../dist", emptyOutDir: true },
+  // assetsInlineLimit 0: the sample files must be real files fetched from our own origin.
+  build: { outDir: "../dist", emptyOutDir: true, assetsInlineLimit: 0 },
+  server: { fs: { allow: [".."] } },
 });

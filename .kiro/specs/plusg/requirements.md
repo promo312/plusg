@@ -14,7 +14,7 @@ Independent musician finishing a song; hackathon judge evaluating the app on a l
 - R1.3 When the user supplies lyrics and credits (title, artist, writers), the system shall include lyric completeness, lyric timing and metadata in the score.
 - R1.4 The system shall show a score that is an integer from 0 to 100 and five named categories, each with a numeric mark, a one-line reason and the measured number the mark came from.
 - R1.5 The system shall display the rubric (categories, weights, thresholds) in the UI and document it in `docs/RUBRIC.md`.
-- R1.6 If a file is not WAV or MP3, cannot be decoded, or exceeds 100 MB, then the system shall reject it with a plain error message and keep the previous sheet.
+- R1.6 If a file is not WAV or MP3, cannot be decoded, exceeds 100 MB, decodes to no audio (empty or zero length), or is longer than 10 minutes, then the system shall reject it with a plain error message and keep the previous sheet.
 - R1.7 When the user chooses the preloaded sample track, the system shall run the same measurement on the bundled audio, with its finished cue file, without an upload.
 
 ## R2 Fix
