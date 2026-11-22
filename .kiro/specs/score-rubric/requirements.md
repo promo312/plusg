@@ -14,6 +14,8 @@ Every category returns a numeric mark, a one-line reason and the measured number
 - R-SCORE-6 Clean start and end (15): full marks when leading silence is at most 1.5 s and trailing silence at most 3 s. Measured: both durations.
 - R-SCORE-7 Lyric completeness and sync (25): presence, share of the track duration covered by cues, monotonic cue times. Measured: line count, cue coverage percent.
 - R-SCORE-8 Metadata readiness (15): title, artist and writers count equally. Measured: fields present out of 3.
-- R-SCORE-9 Length and ending (20): half the weight for duration inside 90 s to 360 s; half for the last 500 ms being neither cut mid-signal (RMS above -30 dBFS at the end of the file) nor followed by more than 3 s of silence. No section detection. Measured: duration and last-500 ms level.
+- R-SCORE-9 Length and ending (20): half the weight for duration inside 90 s to 360 s; half for the last 500 ms being neither cut mid-signal (RMS above -40 dBFS at the end of the file) nor followed by more than 3 s of silence. No section detection. Measured: duration, last-500 ms level and trailing silence.
 
-Exact thresholds are finalized in `docs/RUBRIC.md` in T4.
+**Change in T4 (reason):** the cut threshold was -30 dBFS in the first draft. The `cut` fixture ends at -31.6 dBFS (a quiet, unfaded tone), so -30 would not flag it. -40 dBFS still sits well above the -50 dBFS silence floor, so a fade that reaches near-silence passes and a tone that stops abruptly does not.
+
+Exact thresholds are finalized in `docs/RUBRIC.md` (T4).
