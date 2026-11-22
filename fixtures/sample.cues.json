@@ -1,0 +1,37 @@
+{
+  "file": "sample.wav",
+  "lines": [
+    {
+      "startMs": 1500,
+      "text": "Lantern on the window sill"
+    },
+    {
+      "startMs": 5750,
+      "text": "Counting down the evening"
+    },
+    {
+      "startMs": 10000,
+      "text": "Paper boats on silver rain"
+    },
+    {
+      "startMs": 14250,
+      "text": "Drifting toward the morning"
+    },
+    {
+      "startMs": 18500,
+      "text": "Hold the light a little while"
+    },
+    {
+      "startMs": 22750,
+      "text": "Let the quiet answer"
+    },
+    {
+      "startMs": 27000,
+      "text": "Every small and fading star"
+    },
+    {
+      "startMs": 31250,
+      "text": "Learns the way to gather"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "file": "bad.wav",
+  "source": "ffmpeg ebur128=peak=true",
+  "integratedLufs": -23.1,
+  "loudnessRangeLu": 6.8,
+  "truePeakDbtp": 0.6,
+  "sampleRate": 44100,
+  "channels": 2,
+  "durationSec": 7.505011
+}

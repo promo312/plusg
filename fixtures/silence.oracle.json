@@ -1,0 +1,10 @@
+{
+  "file": "silence.wav",
+  "source": "ffmpeg ebur128=peak=true",
+  "integratedLufs": -70.0,
+  "loudnessRangeLu": 0.0,
+  "truePeakDbtp": null,
+  "sampleRate": 48000,
+  "channels": 2,
+  "durationSec": 5.000000
+}

@@ -4,7 +4,7 @@
 
 Built for Kiroween 2026, Resurrection category. Inspired by Vrenvo's public "Measure. Fix. Release." idea. This is a new codebase and uses no Vrenvo code or data.
 
-- **Live demo:** not published yet (task T1). The GitHub Pages URL goes here.
+- Live demo: https://promo312.github.io/plusg/ (static, GitHub Pages)
 - **License:** MIT
 
 ## How it runs
@@ -13,7 +13,7 @@ Static files only. Audio is decoded with Web Audio and measured in JavaScript (I
 
 ## Status
 
-Scaffold only (T0, T0b). Specs, steering, hooks, agents, MCP, test runner and the Pages workflow exist. Features are tracked in [.kiro/specs/plusg/tasks.md](.kiro/specs/plusg/tasks.md).
+Done: scaffold, specs, steering, hooks, agents, MCP, test runner, Pages deploy (the placeholder page is live) and generated audio fixtures with ffmpeg oracle files (T0, T0b, T1, T2). Not built yet: the JS meter, fixes, lyric tap-along, CD+G encoder and decoder, previews, one-sheet and clip export. Features are tracked in [.kiro/specs/plusg/tasks.md](.kiro/specs/plusg/tasks.md).
 
 ## Run locally
 
@@ -24,6 +24,7 @@ npm install
 npm run dev       # Vite dev server
 npm run build     # static site in dist/
 npm run preview   # serve dist/
+npm run fixtures  # regenerate fixtures/ (needs ffmpeg)
 ```
 
 ## Test

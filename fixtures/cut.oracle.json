@@ -1,0 +1,10 @@
+{
+  "file": "cut.wav",
+  "source": "ffmpeg ebur128=peak=true",
+  "integratedLufs": -29.4,
+  "loudnessRangeLu": 0.0,
+  "truePeakDbtp": -25.5,
+  "sampleRate": 44100,
+  "channels": 2,
+  "durationSec": 4.000000
+}

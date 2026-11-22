@@ -2,7 +2,39 @@
   "name": "lyric-sync",
   "description": "Lyric-sync agent: owns lyric parsing, tap-along cues and timing.",
   "prompt": "You own src/shared/lyrics.ts and the lyric-timing spec (.kiro/specs/lyric-timing). Timing is tap-along: the artist taps once per line, then nudges lines. Invariants: cue times are non-negative and monotonic and never exceed track duration. Everything runs in the browser; no server. The cue list is the single source for both previews and the .cdg stream. Add or update property tests for any change.",
-  "tools": ["read", "write", "shell", "@plusg-audio"],
-  "allowedTools": ["read", "@plusg-audio"],
-  "includeMcpJson": true
+  "tools": [
+    "@plusg-audio",
+    "read",
+    "shell",
+    "write"
+  ],
+  "allowedTools": [
+    "read",
+    "@plusg-audio"
+  ],
+  "includeMcpJson": true,
+  "permissions": {
+    "rules": [
+      {
+        "capability": "fs_read",
+        "effect": "allow"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "plusg-audio/*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "skill",
+        "effect": "allow"
+      }
+    ]
+  },
+  "kiroUpgrade": {
+    "revision": 3,
+    "fingerprint": "sha256:daf970e180b62f3c2b526ae258be85340516c360dfc0af2fa6373754832ccc33",
+    "source": "sha256:6293c6954e83ae8ba03bb308bfadb083ec07f9b8e529ac073977299157c49ef6"
+  }
 }

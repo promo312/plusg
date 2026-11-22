@@ -1,0 +1,10 @@
+{
+  "file": "mono.wav",
+  "source": "ffmpeg ebur128=peak=true",
+  "integratedLufs": -18.0,
+  "loudnessRangeLu": 0.2,
+  "truePeakDbtp": -11.4,
+  "sampleRate": 48000,
+  "channels": 1,
+  "durationSec": 6.000000
+}

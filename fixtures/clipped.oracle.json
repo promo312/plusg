@@ -1,0 +1,10 @@
+{
+  "file": "clipped.wav",
+  "source": "ffmpeg ebur128=peak=true",
+  "integratedLufs": 2.3,
+  "loudnessRangeLu": 20.0,
+  "truePeakDbtp": 0.2,
+  "sampleRate": 48000,
+  "channels": 2,
+  "durationSec": 3.000000
+}

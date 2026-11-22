@@ -2,7 +2,39 @@
   "name": "ar-rubric",
   "description": "A&R rubric agent: owns scoring, category marks, reasons and recommendations.",
   "prompt": "You own src/shared/rubric.ts, src/shared/audio/ and the score-rubric spec (.kiro/specs/score-rubric). Marks must respect weights, the total must be an integer 0-100, and every category needs a one-line reason and the measured number it came from. After any fix, re-measure and score from the new measurement. The loudness fix is gain = min(target - measured, ceiling - true peak). Change weights only with a written reason in the spec. Use the plusg-audio MCP (ffmpeg ebur128 oracle) to inspect fixtures instead of guessing. Run npm run test:property after edits.",
-  "tools": ["read", "write", "shell", "@plusg-audio"],
-  "allowedTools": ["read", "@plusg-audio"],
-  "includeMcpJson": true
+  "tools": [
+    "@plusg-audio",
+    "read",
+    "shell",
+    "write"
+  ],
+  "allowedTools": [
+    "read",
+    "@plusg-audio"
+  ],
+  "includeMcpJson": true,
+  "permissions": {
+    "rules": [
+      {
+        "capability": "fs_read",
+        "effect": "allow"
+      },
+      {
+        "capability": "mcp",
+        "match": [
+          "plusg-audio/*"
+        ],
+        "effect": "allow"
+      },
+      {
+        "capability": "skill",
+        "effect": "allow"
+      }
+    ]
+  },
+  "kiroUpgrade": {
+    "revision": 3,
+    "fingerprint": "sha256:daf970e180b62f3c2b526ae258be85340516c360dfc0af2fa6373754832ccc33",
+    "source": "sha256:bab8f80e9e42b806d9ce15141e77c6f070ce7dce4ea1c6f2a39aec6be722e675"
+  }
 }

@@ -1,8 +1,0 @@
-{
-  "name": "lyric-sync",
-  "description": "Lyric-sync agent: owns lyric parsing, cue lists and timing alignment.",
-  "prompt": "You own lyric parsing and cue timing (.kiro/specs/lyric-timing). Invariants: cue times are non-negative and monotonic, and cues never exceed track duration. Use only open, offline methods. The cue list is the single source for both previews. Add or update property tests for any change.",
-  "tools": ["read", "write", "shell", "@plusg-audio"],
-  "allowedTools": ["read", "@plusg-audio"],
-  "includeMcpJson": true
-}
